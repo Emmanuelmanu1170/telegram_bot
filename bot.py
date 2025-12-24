@@ -1,20 +1,22 @@
-import telebot
 import os
+import telebot
 
-BOT_TOKEN = os.getenv("8218038699:AAErWFiSVjERrbtJHsUMmjCRAZ1iB_TTzjQ")
-ADMIN_CHAT_ID = 8195507141  # replace with your real Telegram ID
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
-bot = telebot.TeleBot(BOT_TOKEN)
+if not BOT_TOKEN:
+    raise RuntimeError("BOT_TOKEN is missing")
 
-@bot.message_handler(commands=['start'])
+bot = telebot.TeleBot(BOT_TOKEN, parse_mode="HTML")
+
+@bot.message_handler(commands=["start"])
 def start(message):
     keyboard = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.row("📦 Services", "💰 Prices")
-    keyboard.row("📝 Place Order", "📞 Contact Admin")
+    keyboard.row("📞 Contact Admin")
 
     bot.send_message(
         message.chat.id,
-        "👋 Welcome!\nI help automate online business orders.\nChoose an option 👇",
+        "👋 <b>Welcome</b>\nChoose an option 👇",
         reply_markup=keyboard
     )
 
@@ -22,14 +24,14 @@ def start(message):
 def services(m):
     bot.send_message(
         m.chat.id,
-        "📦 Services:\n• Data Reselling\n• Telegram Bots\n• Digital Marketing\n• Social Media Boosting"
+        "📦 <b>Services</b>\n• Data Reselling\n• Social Media Boosting\n• Telegram Automation"
     )
 
 @bot.message_handler(func=lambda m: m.text == "💰 Prices")
 def prices(m):
     bot.send_message(
         m.chat.id,
-        "💰 Prices:\nBot Setup: ₵500\nSupport: ₵150"
+        "💰 <b>Prices</b>\nBot Setup: ₵500\nSupport: ₵150"
     )
 
 @bot.message_handler(func=lambda m: m.text == "📞 Contact Admin")
@@ -39,4 +41,4 @@ def contact(m):
         "📞 Admin: @yourusername"
     )
 
-bot.polling(non_stop=True)
+bot.polling(non_stop=True, skip_pending=True)

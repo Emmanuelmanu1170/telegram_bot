@@ -41,4 +41,9 @@ def contact(m):
         "📞 Admin: @yourusername"
     )
 
-bot.polling(non_stop=True, skip_pending=True)
+bot.polling(# This removes any old connections (Fixes Error 409)
+bot.remove_webhook()
+
+# Then start the bot
+bot.polling(none_stop=True)
+ )

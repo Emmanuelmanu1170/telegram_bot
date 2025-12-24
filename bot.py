@@ -40,7 +40,7 @@ def contact(m):
         m.chat.id,
         "📞 Admin: @yourusername"
     )
-
+bot.remove_webhook()
 bot.polling(# This removes any old connections (Fixes Error 409)
 bot.remove_webhook()
 
